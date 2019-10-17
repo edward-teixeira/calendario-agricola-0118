@@ -19,7 +19,7 @@ exports.create_user = async (req, res) => {
         email: req.body.email});
         res.status(201).json(newUser);
       } else {
-        res.send({error: 'User Already Exists'})
+        res.status(404).send({error: 'User Already Exists'})
       }
     }).catch(err => res.status(500).send(err));
 
