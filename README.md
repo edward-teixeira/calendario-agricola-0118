@@ -59,13 +59,13 @@ possa adicionar notas com observações, registrar e categorizar a colheita.
 #### **\*Obs: As telas estão na pasta "mockups" do repositório;**
 
 
-![Em construcao](mockups/mockup.png)
+![Em construcao](Specs/mockups/mockup.png)
 
 
 
 ## Esquema do banco de dados:
 
-![](modelo_relacional/Diagrama-UML-Projeto.jpg)
+![](Specs/modelo_relacional/Diagrama-UML-Projeto.jpg)
 
 ## Stack a ser utilizada:
 ![](https://miro.medium.com/max/680/1*s3lCEFnq4RyAKeeYnhTkVw.jpeg);
