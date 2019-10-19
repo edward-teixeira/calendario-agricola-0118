@@ -79,3 +79,18 @@ possa adicionar notas com observações, registrar e categorizar a colheita.
 - Plataformas: Android e IOS;
 - O Banco de dados está hospedado em um cluster, que está incluso no arquivo,
 não é necessário a instação do banco na maquina;
+
+## Instalação: 
+- Dependencias:
+    - Necessária a instalação do [NodeJS](https://nodejs.org/en/);
+
+1. Clone o repositório:
+    ```shell
+    git@github.com:edward-teixeira/calendario-agricola-0118.git
+2. Execute o seguindo comando:
+    ```shell
+    npm install
+3. Para rodar o app
+    ```shell
+    npm run dev
+O banco de dados é conectado automaticamente.
