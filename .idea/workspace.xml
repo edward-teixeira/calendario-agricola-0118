@@ -4,22 +4,6 @@
     <list default="true" id="5e600163-b886-4a81-800b-b5032f4436b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controller/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/key.js" beforeDir="false" afterPath="$PROJECT_DIR$/db/key.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/anotacao.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/anotacao.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/ciclo.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/ciclo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/colheita.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/colheita.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/plantacao.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/plantacao.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/error.pug" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.pug" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layout.pug" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +19,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Editado gitignore" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JsFlowSettings">
@@ -54,6 +43,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/Specs" />
     </key>
   </component>
@@ -115,6 +105,7 @@
       <workItem from="1571456980742" duration="813000" />
       <workItem from="1571659755821" duration="13345000" />
       <workItem from="1571673942672" duration="14843000" />
+      <workItem from="1571742600423" duration="1461000" />
     </task>
     <servers />
   </component>
