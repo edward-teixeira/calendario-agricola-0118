@@ -3,7 +3,7 @@
  const URL = require('./key');
 
 const connect = () => {
- return mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology: true});
+ return mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 }
 connect()
   .then(async connection => {
