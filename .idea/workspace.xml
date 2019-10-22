@@ -70,7 +70,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="www" type="NodeJSConfigurationType" editBeforeRun="true" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/bin/www" working-dir="$PROJECT_DIR$/controller">
+    <configuration name="www" type="NodeJSConfigurationType" editBeforeRun="true" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/bin/www" working-dir="$PROJECT_DIR$/src/controller">
       <method v="2" />
     </configuration>
     <configuration default="true" type="js.build_tools.npm">
