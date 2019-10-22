@@ -18,7 +18,6 @@ const cicloSchema = new mongoose.Schema({
     default: 0
   }
 });
-
 cicloSchema
   .virtual('dataColheita')
   .get(function() {
@@ -27,7 +26,7 @@ cicloSchema
 cicloSchema
   .virtual('url')
   .get(function() {
-    return 'Nao Implementado ' + this._id;
+    return '/user/plantacao/ciclo/' + this._id;
   });
 
   module.exports = ('Ciclo', cicloSchema);

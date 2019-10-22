@@ -7,35 +7,34 @@ const colheitaSchema = new mongoose.Schema({
   tamanho: {
     type: Number
   },
-  classificação: {
+  classificacao: {
     cheiro:{
       type: Number,
-      min: 1,
-      max: 5,
+      min: [1, 'Avalicao deve ter o minimo de 1'],
+      max: [5, 'Avaliacao deve ter o maximo de 5'],
       default: 0
     },
     gosto:{
       type: Number,
-      min: 1,
-      max: 5,
+      min: [1, 'Avalicao deve ter o minimo de 1'],
+      max: [5, 'Avaliacao deve ter o maximo de 5'],
     default: 0
     } ,
     Densidade:{
       type: Number,
-      min: 1,
-      max: 5,
+      min: [1, 'Avalicao deve ter o minimo de 1'],
+      max: [5, 'Avaliacao deve ter o maximo de 5'],
       default: 0
     } ,
     Visual: {
       type: Number,
-      min: 1,
-      max: 5 ,
+      min: [1, 'Avalicao deve ter o minimo de 1'],
+      max: [5, 'Avaliacao deve ter o maximo de 5'],
       default: 0
   },
   observacoes: {
     type: String,
-    min: 1,
-    max: 5,
+    maxlength: [15, 'Observações não podem execeder 15 caracteres'],
     trim: true
   },
   plantacao: {
@@ -47,7 +46,7 @@ const colheitaSchema = new mongoose.Schema({
 colheitaSchema
   .virtual('url')
   .get(function() {
-    return 'Nao implementado' + this._id;
+    return '/user/colheita/' + this._id;
   });
 
 module.exports = mongoose.model('Colheita', colheitaSchema);

@@ -20,15 +20,15 @@ possa adicionar notas com observações, registrar e categorizar a colheita.
     - Validação;
 - Excluir plantação;
 - Adicionar uma anotação:
-    - Preencher com título, data e descrição;
-    - A data será a data do dia formatada;
+    - Preencher com título, user e descrição;
+    - A user será a user do dia formatada;
 - Atualizar uma anotação:
     - Mudar o titulo;
     - Mudar a descrição;
     - Data não pode ser alterada;
 - Listar uma plantação em detalhes:
     - Listar todos os campos sequencialmente;
-    - Limitar as anotação pela data do dia;
+    - Limitar as anotação pela user do dia;
 - Popular o campo da colheita;
     - Automaticamente mandar as plantações para a colheita de acordo com as 
     datas de germinação, crescimento e floração informadas pelo usuário;

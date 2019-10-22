@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//TODO(Implementar upload de fotos da plantacao);
+//TODO(-Implementar upload de fotos da plantacao,
+//      -Implementar paginação);
 const plantacaoSchema = new mongoose.Schema({
   nome: {
     type: String,
-    maxlength: 15,
-    minlength: 1
+    trim: true,
+    maxlength: [15, "Nome deve ter no máximo 15 caracteres"],
+    minlength: [1, "Nome deve ter no mínimo 1 caractere"]
   },
   sistemaPlantio: {
     type: String,
@@ -30,7 +32,7 @@ const plantacaoSchema = new mongoose.Schema({
 plantacaoSchema
   .virtual('url')
   .get(function() {
-    return 'Nao implementado ' + this._id;
+    return '/user/plantacao/' + this._id;
 });
 
 module.exports = mongoose.model('Plantacao', plantacaoSchema);
