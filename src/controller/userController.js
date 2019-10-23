@@ -1,8 +1,9 @@
 const User = require('../models/user');
 const mongoose = require('mongoose');
+const Yup = require('yup');
 const chalk = require("chalk");
 var ObjectId = mongoose.Schema.ObjectId;
-//index, show, store, update, destroy
+//create, update, destroy
 exports.list_user = async (req,res,next) => {
     try {
         const user = await User.find({}).exec();
@@ -13,19 +14,54 @@ exports.list_user = async (req,res,next) => {
 };
 exports.create_user = async (req, res) => {
 
-    const {name, password, email} = req.body;
-    const isFound = await User.exists({email: req.body.email});
-    if(!isFound) {
-        await User.create({name: name, password: password, email: email})
-            .then(user => res.status(200).json({success: true, user}))
-            .catch(err => res.status(500).json({success: false, message: "Ocorreu um erro ao salvar o documento"}));
+    const schema = Yup.object().shape({
+        name: Yup.string().required(),
+        email: Yup.string().required(),
+        password: Yup.string().required().min(6)
+    });
+    try {
+        if (!(await schema.isValid(req.body)))
+            return res.status(400).json({error: 'Dados inválidos'})
+
+        const {name, password, email} = req.body;
+        const isFound = await User.exists({email: req.body.email});
+        if (!isFound) {
+            await User.create({name: name, password: password, email: email})
+                .then(user => res.status(200).json({success: true, user}))
+                .catch(err => res.status(500).json({
+                    success: false,
+                    message: "Ocorreu um erro ao salvar o documento"
+                }));
+        } else
+            return res.status(400).json({
+                success: true,
+                message: "Email já está cadastrado"
+            });
+    } catch (e) {
+        res.status(500).json({error: 'Ocorreu um erro desconhecido'});
     }
-    else
-        return res.status(400).json({success: true, message: "Email já está cadastrado"});
 
 };
 exports.update_user = async (req, res) => {
+    const schema = Yup.object().shape({
+        name: Yup.string(),
+        email: Yup.string(),
+        oldpassword: Yup.string().min(6),
+        newpassword: Yup.string().min(6)
+            .when('oldpassword', (oldpassword, field) =>
+                oldpassword ?field.required(): field
+            ),
+        confirmpassword: Yup.string()
+            .when('newpassword', (newpassword, field) =>
+            newpassword ?
+                field.required().oneOf([Yup.ref('newpassword')]) : field
+            )
+    });
+
     try {
+        if (!(await schema.isValid(req.body)))
+            return res.status(400).json({error: 'Dados inválidos'})
+
         const {email, oldpassword, newpassword} = req.body;
         const reqID = mongoose.Types.ObjectId(req.userId);
         const user = await User.findById(reqID);

@@ -18,7 +18,8 @@
     "mongodb": "^3.3.3",
     "mongoose": "^5.7.4",
     "morgan": "~1.9.1",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.3"
