@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//TODO(-Implementar upload de fotos da plantacao,
-//      -Implementar paginação);
+//TODO(
+//      -Implementar upload de fotos da plantacao,
+//      -Implementar paginação
+//      -Colocar required nos campos);
 const plantacaoSchema = new mongoose.Schema({
   nome: {
     type: String,
@@ -17,7 +19,7 @@ const plantacaoSchema = new mongoose.Schema({
     type: String,
     enum: ['semente', 'muda']
   },
-  dataInicio: Date.now,
+  dataInicio: Date.now(),
   ciclo: {
     type: Schema.Types.ObjectId,
     ref: 'ciclo'
@@ -26,9 +28,9 @@ const plantacaoSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'anotacao'
   }],
-
   }
-});
+}, { timestamps: { createdAt: 'created_at' } });
+plantacaoSchema.method('data')
 plantacaoSchema
   .virtual('url')
   .get(function() {

@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-
+//TODO(-Os campos numericos devem ser inteiros)
 const cicloSchema = new mongoose.Schema({
   dataInicio: {
-    type: Date.now,
-    required: true
+    type: new Date(Date.now()) //TODO(verificar isso);
   },
   germinacao: {
     type: Number,

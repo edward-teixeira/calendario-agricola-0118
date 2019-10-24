@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
+
 const bcrypt = require('bcrypt');
-//TODO(-Implementar hashing,
-//     -gerenciar cookies de sessão,
-//     -autenticar(passport)
-// );
 SALT_WORK_FACTOR = 8;
 
 const userSchema = new mongoose.Schema({

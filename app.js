@@ -16,7 +16,8 @@ app.use(require('./src/middleware/bodyParser').urlencoded({ extended: true }));
 app.use(require('./src/middleware/logger'));
 app.use(cookieParser());
 
-//Home page
+//Home
+//TODO(Isso será movido daqui, porque necessita de autenticação de usuario)
 app.use('/', require('./src/routes/index'));
 //Create user
 app.post('/user', userController.create_user);
