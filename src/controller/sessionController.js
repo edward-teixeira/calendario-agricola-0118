@@ -6,7 +6,7 @@ const Yup = require('yup');
 exports.sessionStore = async (req, res, next) => {
 
     const schema = Yup.object().shape({
-        name: Yup.string().required(),
+        name: Yup.string(),
         email: Yup.string().required(),
         password: Yup.string().required()
     });

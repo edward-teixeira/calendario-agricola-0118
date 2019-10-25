@@ -1,22 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose  = require('mongoose');
 
 const bcrypt = require('bcrypt');
 SALT_WORK_FACTOR = 8;
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  }
+    name: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    avatar: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'file',
+    }
 });
 userSchema.pre('save', function(next) {
     var user = this;
@@ -44,9 +48,9 @@ userSchema.methods.comparePassword = function (candidatePassword) {
 };
 
 userSchema
-  .virtual('url')
-  .get(function() {
-    return '/user/' + this._id
-  });
+    .virtual('url')
+    .get(function() {
+        return '/user/' + this._id
+    });
 const User = mongoose.model('User', userSchema);
 module.exports = User;

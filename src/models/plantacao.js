@@ -14,21 +14,23 @@ const plantacaoSchema = new mongoose.Schema({
   },
   sistemaPlantio: {
     type: String,
-    enum: ['hidroponia','terra'],
+    enum: ['hidroponia', 'terra'],
+  },
   tipoPlantio: {
     type: String,
-    enum: ['semente', 'muda']
+    enum: ['semente','muda']
   },
-  dataInicio: Date.now(),
+  dataInicio: Date,
   ciclo: {
     type: Schema.Types.ObjectId,
     ref: 'ciclo'
   },
   anotacao: [{
     type: Schema.Types.ObjectId,
-    ref: 'anotacao'
+    ref: 'anotacao',
+    default: "Nenhuma anotação"
   }],
-  }
+
 }, { timestamps: { createdAt: 'created_at' } });
 plantacaoSchema.method('data')
 plantacaoSchema

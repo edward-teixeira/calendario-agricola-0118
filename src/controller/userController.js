@@ -2,7 +2,7 @@ const User = require('../models/user');
 const mongoose = require('mongoose');
 const Yup = require('yup');
 const chalk = require("chalk");
-var ObjectId = mongoose.Schema.ObjectId;
+
 //create, update, destroy
 exports.list_user = async (req,res,next) => {
     try {

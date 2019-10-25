@@ -21,8 +21,11 @@ exports.listOnePlantacao = async(req, res, next) => {
 //@method post
 
 exports.create_plantacao = async(req, res, next) => {
-  res.status(200).json({success: true,
-    message: 'Cria uma plantacao'})
+
+  console.log(req.body);
+
+
+
 };
 //@desc update uma plantacao plantacoes
 //@route user/plantacao/:id
