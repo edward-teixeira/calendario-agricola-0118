@@ -6,7 +6,7 @@ router.route('/')
     .post(plantacaoController.create_plantacao);
 router.route('/:id')
     .get(plantacaoController.listOnePlantacao)
-    .put(plantacaoController.put_plantacao)
-    .delete(plantacaoController.delete_plantacao);
+    .delete(plantacaoController.delete_plantacao)
+    .put(plantacaoController.update_plantacao);
 
 module.exports = router;

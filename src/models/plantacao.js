@@ -9,6 +9,7 @@ const plantacaoSchema = new mongoose.Schema({
   nome: {
     type: String,
     trim: true,
+    unique: true,
     maxlength: [15, "Nome deve ter no máximo 15 caracteres"],
     minlength: [1, "Nome deve ter no mínimo 1 caractere"]
   },
@@ -20,7 +21,10 @@ const plantacaoSchema = new mongoose.Schema({
     type: String,
     enum: ['semente','muda']
   },
-  dataInicio: Date,
+  dataInicio: {
+    type: Date,
+    default: Date.now()
+  },
   ciclo: {
     type: Schema.Types.ObjectId,
     ref: 'ciclo'
@@ -31,7 +35,7 @@ const plantacaoSchema = new mongoose.Schema({
     default: "Nenhuma anotação"
   }],
 
-}, { timestamps: { createdAt: 'created_at' } });
+}, { timestamps: true });
 plantacaoSchema.method('data')
 plantacaoSchema
   .virtual('url')

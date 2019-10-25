@@ -65,7 +65,6 @@ exports.update_user = async (req, res) => {
         const {email, oldpassword, newpassword} = req.body;
         const reqID = mongoose.Types.ObjectId(req.userId);
         const user = await User.findById(reqID);
-        console.log(user);
         //Se algum usuário já possui o mesmo email
         if (email !== user.email) {
             const userExists = await User.findOne({email: email});

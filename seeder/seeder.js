@@ -14,7 +14,8 @@ mongoose.connect('mongodb://localhost:27017/calendario-agricola', {
 });
 
 // Read JSON files
-const plantacoes = JSON.parse(fs.readFileSync(
+const plantacoes = JSON.parse(
+    fs.readFileSync(
     `${__dirname}/plantacao.json`, 'utf-8')
 );
 
@@ -27,12 +28,11 @@ const importData = async() => {
         return console.error(chalk.red('error ocurred'));
     }
 };
-
 // Delete data
 // Import into DB
 const deleteData = async() => {
     try {
-        await Plantacao.deleMany();
+        await Plantacao.deleteMany();
         return console.log(chalk.red('Data Destroyed'))
     }catch(error) {
         return console.error(chalk.green('Data deleted'));
@@ -43,4 +43,4 @@ if(process.argv[2] === '-i') {
     importData();
 }else if(process.argv[2] === '-d') {
     deleteData();
-}
+};

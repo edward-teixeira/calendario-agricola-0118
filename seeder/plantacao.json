@@ -4,4 +4,11 @@
   "sistemaPlantio": "terra",
   "tipoPlantio": "muda",
   "dataInicio": "2019/07/21"
+},
+{
+    "_comment": "Data no formato YYYY/MM/DD",
+    "nome": "Tomate",
+    "sistemaPlantio": "terra",
+    "tipoPlantio": "semente",
+  "dataInicio": "2019/07/21"
 }]
