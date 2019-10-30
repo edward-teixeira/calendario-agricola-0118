@@ -1,12 +1,22 @@
 const plantacaoController = require('../controller/plantacaoController');
-const router = require('express').Router();
+const express = require('express');
+var  anotacaoRouter = express.Router({mergeParams: true});
+const anotacaoController = require('../controller/anotacaoController');
 
-router.route('/')
+const plantacaoRouter = require('express').Router();
+plantacaoRouter.use('/:plantacaoId/anotacao', anotacaoRouter);
+
+plantacaoRouter.route('/')
     .get(plantacaoController.listManyPlantacao)
     .post(plantacaoController.create_plantacao);
-router.route('/:id')
-    .get(plantacaoController.listOnePlantacao)
-    .delete(plantacaoController.delete_plantacao)
-    .put(plantacaoController.update_plantacao);
 
-module.exports = router;
+plantacaoRouter.route('/:id')
+    .get(plantacaoController.listOnePlantacao)
+    .put(plantacaoController.update_plantacao)
+    .delete(plantacaoController.delete_plantacao);
+
+anotacaoRouter.route('/')
+    .post(anotacaoController.criarAnotacao);
+
+
+module.exports = plantacaoRouter;

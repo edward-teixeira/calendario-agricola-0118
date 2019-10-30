@@ -1,21 +1,38 @@
 const Plantacao = require('../models/plantacao');
 const mongoose = require('mongoose');
+const express = require("express");
+
 
 //@desc lista todas as plantacoes
 //@route /user/plantacao
 //@method get
 
 exports.listManyPlantacao = async(req, res, next) => {
-  res.status(200).json({success: true,
-        message: 'Lista todas as plantacoes'})
+  try{
+      await Plantacao.find({}, function(err, plantacao) {
+        if(plantacao)  return res.status(200).json({plantacao});
+        if(err) return res.status(200).json({error: "Nao existem plantacoes"});
+    });
+  }catch(error) {
+    res.status(500).json({error: "Nao foi possivel listar plantacoes"});
+  }
 };
 //@desc lista uma as plantacaos
 //@route /user/plantacao/:id
 //@method get
 
 exports.listOnePlantacao = async(req, res, next) => {
-  res.status(200).json({success: true,
-    message: `Lista uma plantacao de id: ${req.params.id}`})
+
+    try{
+       const plantacao =  await Plantacao.findById({"_id": req.params.id}, function(err, plantacao) {
+           if(plantacao)  return res.status(200).json({plantacao});
+
+           if(err) return res.status(200).json({error: "Plantacao não encontrada"});
+       }).exec();
+
+    }catch(error) {
+        res.status(500).json({error: error});
+    }
 };
 //@desc cria uma plantacao plantacoes
 //@route /user/plantacao

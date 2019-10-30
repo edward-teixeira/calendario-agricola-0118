@@ -12,8 +12,7 @@ const anotacaoSchema = mongoose.Schema({
     maxlength: [20, 'Titulo deve deve ter no máximo 20 caracteres'],
     minlength: [1, 'Titulo deve ter no máximo 1 caractere']
   },
-  data: Date.now
-});
+}, {timestamp: true});
 anotacaoSchema
   .virtual('url')
   .get(function() {
