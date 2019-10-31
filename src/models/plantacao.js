@@ -21,6 +21,21 @@ const plantacaoSchema = new mongoose.Schema({
     type: String,
     enum: ['semente','muda']
   },
+  ciclo: {
+   germinacao: {
+     type: Number,
+     default: 5
+   },
+    floraçao: {
+     type: Number,
+     default: 70
+    },
+    colheita: {
+       type: Number,
+       default: 75
+    }
+  },
+  prontoParaColheita: false,
   dataInicio: {
     type: Date,
     default: Date.now()
@@ -40,7 +55,7 @@ plantacaoSchema.method('data')
 plantacaoSchema
   .virtual('url')
   .get(function() {
-    return '/user/plantacao/' + this._id;
+    return '/plantacao/' + this._id;
 });
 
 module.exports = mongoose.model('Plantacao', plantacaoSchema);

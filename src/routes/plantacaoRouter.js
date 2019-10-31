@@ -18,5 +18,11 @@ plantacaoRouter.route('/:id')
 anotacaoRouter.route('/')
     .post(anotacaoController.criarAnotacao);
 
+anotacaoRouter.route('/:id')
+    .get(anotacaoController.listarAnotacao)
+    .put(anotacaoController.atualizarAnotacao)
+    .delete(anotacaoController.deletarAnotacao);
+
+
 
 module.exports = plantacaoRouter;

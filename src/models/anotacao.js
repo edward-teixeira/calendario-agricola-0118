@@ -12,11 +12,11 @@ const anotacaoSchema = mongoose.Schema({
     maxlength: [20, 'Titulo deve deve ter no máximo 20 caracteres'],
     minlength: [1, 'Titulo deve ter no máximo 1 caractere']
   },
-}, {timestamp: true});
+}, {timestamps: true});
 anotacaoSchema
   .virtual('url')
   .get(function() {
-    return '/user/plantacao/anotacao/' + this._id;
+    return `/plantacao/${plantacao._id}/anotacao/${anotacao._id}`
   });
 
-module.exports = mongoose.model('Anotacao', anotacaoSchema);
+module.exports = mongoose.model('anotacao', anotacaoSchema);
