@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const anotacaoSchema = mongoose.Schema({
   titulo: {
     type: String,
-    maxlength: [10, 'Titulo deve deve ter no máximo 10 caracteres'],
+    maxlength: [20, 'Titulo deve deve ter no máximo 10 caracteres'],
     minlength: [1, 'Titulo deve ter no máximo 1 caractere']
   },
   descricao:{
     type: String,
-    maxlength: [20, 'Titulo deve deve ter no máximo 20 caracteres'],
+    maxlength: [50, 'Titulo deve deve ter no máximo 20 caracteres'],
     minlength: [1, 'Titulo deve ter no máximo 1 caractere']
   },
 }, {timestamps: true});

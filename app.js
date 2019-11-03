@@ -1,5 +1,7 @@
 //Dependencias iniciais
 require('./src/db/connect');
+//require('./src/middleware/detectOnDatabaseChange');
+const chalk = require('chalk');
 const express = require('express');
 const cookieParser = require('./src/middleware/cookieParser');
 const createError = require('http-errors');
@@ -30,8 +32,9 @@ app.use(authMiddleware.authHeader);
 
 //Update user
 app.put('/user', userController.update_user);
-app.post('/user/files', upload.single('file'), require('./src/controller/fileController').save);
+//app.post('/user/files', upload.single('file'), require('./src/controller/fileController').save);
 //Rota para plantacoes
-app.use('/plantacao',require('./src/routes/plantacaoRouter'));
+app.use('/plantacao', require('./src/routes/plantacaoRouter'));
+app.use('/colheita', require('./src/routes/colheitaRouter'));
 
 module.exports = app;

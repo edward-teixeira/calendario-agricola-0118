@@ -16,6 +16,7 @@ plantacaoRouter.route('/:id')
     .delete(plantacaoController.delete_plantacao);
 
 anotacaoRouter.route('/')
+    .get(anotacaoController.listarTodasAnotacoes)
     .post(anotacaoController.criarAnotacao);
 
 anotacaoRouter.route('/:id')

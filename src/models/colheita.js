@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const colheitaSchema = new mongoose.Schema({
   quantidade: {
@@ -38,15 +39,16 @@ const colheitaSchema = new mongoose.Schema({
     trim: true
   },
   plantacao: {
-    type: Schema.Type.ObjectId,
-    ref: 'plantacao'
+    type: Schema.Types.ObjectId,
+    ref: 'plantacao',
+    required: true
   }
 }
 });
 colheitaSchema
   .virtual('url')
   .get(function() {
-    return '/user/colheita/' + this._id;
+    return '/colheita/' + this._id;
   });
 
-module.exports = mongoose.model('Colheita', colheitaSchema);
+module.exports = mongoose.model('colheita', colheitaSchema);

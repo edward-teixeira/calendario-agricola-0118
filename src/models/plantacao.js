@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const datefns = require('date-fns');
 
-//TODO(
-//      -Implementar upload de fotos da plantacao,
-//      -Implementar paginação
-//      -Colocar required nos campos);
+//TODO(-Implementar upload de fotos da plantacao,);
 const plantacaoSchema = new mongoose.Schema({
   nome: {
     type: String,
@@ -21,21 +19,22 @@ const plantacaoSchema = new mongoose.Schema({
     type: String,
     enum: ['semente','muda']
   },
-  ciclo: {
-   germinacao: {
-     type: Number,
-     default: 5
-   },
-    floraçao: {
-     type: Number,
-     default: 70
-    },
-    colheita: {
-       type: Number,
-       default: 75
-    }
+  germinacao: {
+    type: Number,
+    default: 5
   },
-  prontoParaColheita: false,
+  floraçao: {
+    type: Number,
+    default: 70
+  },
+  colheita: {
+    type: Number,
+    default: 75
+  },
+  prontoParaColheita: {
+    type: Boolean,
+    default: false
+  },
   dataInicio: {
     type: Date,
     default: Date.now()
@@ -47,11 +46,20 @@ const plantacaoSchema = new mongoose.Schema({
   anotacao: [{
     type: Schema.Types.ObjectId,
     ref: 'anotacao',
-    default: "Nenhuma anotação"
   }],
 
 }, { timestamps: true });
-plantacaoSchema.method('data')
+
+plantacaoSchema.virtual('podeColher')
+    .get( function() {
+        const p = this.colheita + this.floraçao + this.germinacao;
+        if(p !== 0) {
+          const dataColheita = datefns.format((datefns.addDays(this.dataInicio, p)), 'dd/MM/yyyy');
+          const dataAgora = datefns.format(new Date(Date.now()), 'dd/MM/yyyy');
+          return  datefns.isEqual(dataColheita, dataAgora);
+        }
+        return true;
+    });
 plantacaoSchema
   .virtual('url')
   .get(function() {
