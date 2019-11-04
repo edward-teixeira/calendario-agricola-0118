@@ -66,4 +66,4 @@ plantacaoSchema
     return '/plantacao/' + this._id;
 });
 
-module.exports = mongoose.model('Plantacao', plantacaoSchema);
+module.exports = mongoose.model('plantacao', plantacaoSchema);

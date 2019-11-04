@@ -54,7 +54,7 @@ exports.listOnePlantacao = async(req, res, next) => {
                         });
                     }
                 }else
-                    return res.status(200).json({error: false, plantacao});
+                    return res.status(200).json({error: true, message: "Plantacao nao encontrada"});
             if(err)
                 return res.status(200).json({error: true,message: "Plantacao não encontrada"});
         });
@@ -69,7 +69,6 @@ exports.listOnePlantacao = async(req, res, next) => {
 
 exports.create_plantacao = async(req, res, next) => {
     try {
-        console.log(req.body);
         const plantacao = await Plantacao.create(req.body);
         if(!plantacao)
             return res.status(400).json({error:true, message: 'Houve um erro ao salvar os dados'});

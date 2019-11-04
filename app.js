@@ -23,13 +23,10 @@ const upload = multer(multerConfig);
 
 //Create user
 app.post('/user', userController.create_user);
-
 //Rota para login
 app.use('/sessions', require('./src/routes/sessionRouter'));
-
 //Middleware de autenticação
 app.use(authMiddleware.authHeader);
-
 //Update user
 app.put('/user', userController.update_user);
 //app.post('/user/files', upload.single('file'), require('./src/controller/fileController').save);

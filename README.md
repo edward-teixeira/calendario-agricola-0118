@@ -1,7 +1,7 @@
 # Calendário Agricola para auxilio durante o período de plantio
 O presente repositorio é dedicado ao desenvolvimento de um aplicativo que visa
-auxiliar o agricultor a fazer o monitoramento do plantio até a colheita, onde ele
-possa adicionar notas com observações, registrar e categorizar a colheita.
+auxiliar o agricultor a fazer o monitoramento do plantio até a data, onde ele
+possa adicionar notas com observações, registrar e categorizar a data.
 
 ## Especificação: 
 
@@ -29,13 +29,13 @@ possa adicionar notas com observações, registrar e categorizar a colheita.
 - Listar uma plantação em detalhes:
     - Listar todos os campos sequencialmente;
     - Limitar as anotação pela user do dia;
-- Popular o campo da colheita;
-    - Automaticamente mandar as plantações para a colheita de acordo com as 
+- Popular o campo da data;
+    - Automaticamente mandar as plantações para a data de acordo com as 
     datas de germinação, crescimento e floração informadas pelo usuário;
-- Editar as informações da colheita: 
-    - Caracteristicas para cada item da colheita como peso e densidade;
+- Editar as informações da data: 
+    - Caracteristicas para cada item da data como peso e densidade;
     - Classificação para cada item cheiro, gosto, densidade e aparencia;
-- Ecluir a colheita;
+- Ecluir a data;
 
 - Usuário:
     - Autenticação via JWT e cookies;
