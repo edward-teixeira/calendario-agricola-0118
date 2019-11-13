@@ -6,7 +6,7 @@ SALT_WORK_FACTOR = 8;
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+	default: ""
     },
     password: {
         type: String,
@@ -17,36 +17,38 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    avatar: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'file',
-    }
 });
+
+//Função que roda momentos antes de persistir os dados no banco
 userSchema.pre('save', function(next) {
     var user = this;
 
-// only hash the password if it has been modified (or is new)
+//Se o usuario não modificou a senha, persiste os dados
     if (!user.isModified('password')) return next();
-
-// generate a salt
+// Salt = complexidade do algoritmo de encriptação, quanto mais alto maior e mais lento
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-        if (err) return next(err);
 
-        // hash the password using our new salt
-        bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) return next(err);
+        // Gera um novo algoritmo para uma nova senha
+        bcrypt.hash(user.password, salt, (err, hash) => {
             if (err) return next(err);
-            // override the cleartext password with the hashed one
+            // A senha do usuário é agora o hash
             user.password = hash;
-            next();
+            return next();
         });
     });
 });
-
+//Compara a senha que o usuario está tentando usar com a existente no banco
 userSchema.methods.comparePassword = function (candidatePassword) {
-    //verifica se o password é igual
-    return bcrypt.compare(candidatePassword, this.password);
+    const user = this;
+    return new Promise ((resolve, reject) => {
+        bcrypt.compare(candidatePassword, user.password, (err, isMatch) => {
+            if(err) return reject(err);
+            if(!isMatch) return reject(false);
+            return resolve(true);
+        });
+    })
 };
-
 userSchema
     .virtual('url')
     .get(function() {

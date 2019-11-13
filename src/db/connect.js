@@ -4,7 +4,7 @@
 
 const connect = () => {
  return mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
-}
+};
 connect()
   .then(async connection => {
     console.log(chalk.grey.bgGreen.bold('LOG: DATABASE CONNECTED SUCCESFULLY'));

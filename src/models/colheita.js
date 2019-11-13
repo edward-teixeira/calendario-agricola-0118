@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 const datefns = require('date-fns');
 
 const colheitaSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  },
   quantidade: {
     type: Number,
   },

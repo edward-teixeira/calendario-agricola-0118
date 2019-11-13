@@ -10,6 +10,7 @@ const userController = require('./src/controller/userController');
 const authMiddleware = require('./src/middleware/auth');
 const multer = require('multer');
 const multerConfig = require('./src/config/multer');
+const user = require('./src/models/user');
 
 //Sobe o servidor e abre a conexão com o banco
 const app = express();
@@ -19,17 +20,16 @@ app.use(require('./src/middleware/bodyParser').json());
 app.use(require('./src/middleware/bodyParser').urlencoded({ extended: true }));
 app.use(require('./src/middleware/logger'));
 app.use(cookieParser());
-const upload = multer(multerConfig);
 
-//Create user
-app.post('/user', userController.create_user);
-//Rota para login
-app.use('/sessions', require('./src/routes/sessionRouter'));
-//Middleware de autenticação
+
+//Cadastra o usuário
+app.post('/signup',userController.create_user);
+app.post('/signin', userController.logar_user);
 app.use(authMiddleware.authHeader);
+//app.post('/logout', userController.logout_user);
+app.use('/', require('./src/routes/sessionRouter'));
 //Update user
-app.put('/user', userController.update_user);
-//app.post('/user/files', upload.single('file'), require('./src/controller/fileController').save);
+//app.put('/user', userController.update_user);
 //Rota para plantacoes
 app.use('/plantacao', require('./src/routes/plantacaoRouter'));
 app.use('/colheita', require('./src/routes/colheitaRouter'));

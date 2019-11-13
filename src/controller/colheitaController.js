@@ -20,7 +20,7 @@ exports.ListaPlantacaoDaColheita = async(req, res, next) => {
     if(!exists)
         return res.status(400).json({error: true, message: "Plantacao para a colheita nao existe"});
     return res.status(200).json({error: false, nome: exists.nome, tipoPlantio: exists.tipoPlantio, dataInicio: exists.dataIni})
-}
+};
 
 exports.listaColheitas = async (req, res, next) => {
 

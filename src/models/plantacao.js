@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const datefns = require('date-fns');
 
-//TODO(-Implementar upload de fotos da plantacao,);
 const plantacaoSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  },
   nome: {
     type: String,
     trim: true,
