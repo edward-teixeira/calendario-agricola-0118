@@ -9,6 +9,7 @@ import PlantacaoDetailScreen from "./src/screens/PlantacaoDetailScreen";
 import PlantacaoListScreen from "./src/screens/PlantacaoListScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
+import EditPlantacaoScreen from './src/screens/EditPlantacaoScreen';
 import CreateAnotacaoScreen from "./src/screens/CreateAnotacaoScreen";
 import CreatePlantacaoScreen from "./src/components/CreatePlantacaoForm";
 import  { Provider as AuthProvider } from './src/context/AuthContext';
@@ -29,7 +30,7 @@ const switchNavigator = createSwitchNavigator({
             plantacaoList: PlantacaoListScreen,
             createPlantacao: CreatePlantacaoScreen,
             plantacaoDetail: PlantacaoDetailScreen,
-            Plantacao: PlantacaoCreateScreen,
+            plantacaoEditScreen: EditPlantacaoScreen,
             anotacaoCreate: CreateAnotacaoScreen
         }),
         Colheita: ColheitaScreen,

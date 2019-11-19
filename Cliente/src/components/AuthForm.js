@@ -7,7 +7,7 @@ import {
     StyleSheet,
     TouchableOpacity
 } from "react-native";
-import FlashMessage from "react-native-flash-message";
+
 
 const AuthForm = ({ errorMessage, onSubmit, submitButtonText }) => {
     const [ email, setEmail] = useState('');

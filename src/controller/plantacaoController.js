@@ -67,7 +67,8 @@ exports.listOnePlantacao = async(req, res, next) => {
 //TODO(CRIAR - OK)
 exports.create_plantacao = async (req, res, next) => {
     try {
-        const plantacao = await new Plantacao( { ...req.body, userId: req.user._id } );
+	const { nome, tipo, sistema } = req.body
+        const plantacao = await new Plantacao( { nome, tipoPlantio: tipo, sistemaPlantio: sistema, userId: req.user._id } );
         await plantacao.save();
         return res.status(201).json({error: false, message: "Plantacao criada com sucesso"});
     }catch(error) {

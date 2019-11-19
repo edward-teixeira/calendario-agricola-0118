@@ -23,6 +23,7 @@ const SignUpScreen = ({ navigation }) => {
                 submitButtonText="Registrar"
                 onSubmit={signup}
             />
+
             <NavLink
                 routeName="SignIn"
                 buttonTextSubmit="Já possui uma conta?"

@@ -40,7 +40,6 @@ const clearErrorMessage = dispatch => () => {
 const signup = dispatch => async ({ email, password}) => {
     try {
         const response = await calendarioApi.post('/signup', {email, password });
-        console.log(response.data);
         if(!response.data.success) dispatch({type: 'add_error', payload: response.data.message})
         await AsyncStorage.setItem('token', response.data.token);
         dispatch({type: 'signup', payload: response.data.token});
@@ -74,6 +73,6 @@ const signout=  dispatch => async () => {
 
 export const { Provider, Context } = createDataContext(
     authReducer,
-    {signin, signup, signout, clearErrorMessage, tryLocalSignin},
+    { signin, signup, signout, clearErrorMessage, tryLocalSignin },
     { token: null, errorMessage: '' },
 );
