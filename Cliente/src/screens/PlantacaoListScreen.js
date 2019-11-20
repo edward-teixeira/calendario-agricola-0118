@@ -1,21 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, StyleSheet, Text, FlatList, ScrollView, Alert} from 'react-native';
-import PlantacaoListCard  from '../components/PlantacaoListCard';
 import { Context as PlantacaoContext } from '../context/PlantacaoContext';
-import { Card, List, Title, Paragraph, Button, IconButton, Icon, TouchableRipple } from 'react-native-paper';
+import { Card, List, Title, Paragraph, Button, IconButton, Icon, TouchableRipple, FAB, Portal } from 'react-native-paper';
 
 
 
 const PlantacaoListScreen = ({ navigation }) => {
-    
+
     const { state, DeletarPlantacao, ListarPlantacoes, EditarPlantacao } = useContext(PlantacaoContext);
-    
+    const [ Visible, setVisible ] = useState(true);
+
     useEffect(() => {
+        setVisible(true);
         ListarPlantacoes();
         
         const listener = navigation.addListener('didFocus', () => {
+            setVisible(true);
             ListarPlantacoes();
         });
+        const fabListener = navigation.addListener('didBlur', () => {
+            setVisible(false);
+        })
         
         return () => {
             listener.remove();
@@ -33,14 +38,8 @@ const PlantacaoListScreen = ({ navigation }) => {
     
     return (
         <View>
+           
         <ScrollView> 
-        <Button
-        icon="camera"
-        mode="contained"
-        onPress={() => navigation.navigate('createPlantacao')}
-        >
-        Criar Plantacao
-        </Button>
         <FlatList
         showsHorizontalScrollIndicator={false}
         data={state}
@@ -55,13 +54,13 @@ const PlantacaoListScreen = ({ navigation }) => {
                 {item.nome}
                 </Title>
                 <IconButton
-                onPress={() => navigation.navigate('plantacaoEditScreen', {id: item._id })}
+                onPress={() => {  navigation.navigate('plantacaoEditScreen', {id: item._id }) }}
                 size={35}
                 color={'#626262'}
                 icon="pencil-circle-outline"
                 />
                  <IconButton
-                onPress={() => DeletarPlantacao(item._id) }
+                onPress={() => {  DeletarPlantacao(item._id) }}
                 size={35}
                 color={'#ff1744'}
                 icon="delete-circle-outline"
@@ -102,9 +101,22 @@ const PlantacaoListScreen = ({ navigation }) => {
                 )
             }}
             />
-            
+             <Portal>
+             <FAB
+                 style={styles.fab}
+                 icon="plus"
+                 visible={Visible}
+                 color='#626262'
+                 theme={{ colors: { accent: '#00e676' } }}
+                 onPress={() => {
+                     
+                     navigation.navigate('createPlantacao')
+                 }}
+             />
+             </Portal>
             </ScrollView>
             </View>
+            
             )
         };
         
@@ -147,7 +159,14 @@ const PlantacaoListScreen = ({ navigation }) => {
             },
             iconContainer: {
                 margin: 10
-            }
+            },
+            fab: {
+                position: 'absolute',
+                margin: 16,
+                right: 0,
+                bottom: 60,
+                color: '#424242'
+              }
             
         });
         
