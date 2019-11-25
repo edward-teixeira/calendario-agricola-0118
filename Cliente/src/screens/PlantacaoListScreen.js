@@ -5,6 +5,7 @@ import { Card, List, Title, Paragraph, Button, IconButton, Icon, TouchableRipple
 
 
 
+
 const PlantacaoListScreen = ({ navigation }) => {
 
     const { state, DeletarPlantacao, ListarPlantacoes, EditarPlantacao } = useContext(PlantacaoContext);
@@ -46,7 +47,21 @@ const PlantacaoListScreen = ({ navigation }) => {
         keyExtractor={ plantacao => plantacao._id }
         renderItem={({item}) => {
             return (
-                <Card style={styles.container}>
+                <Card style={styles.container}
+                    onPress={() =>{
+                        console.log(item);    
+                        navigation.navigate('plantacaoDetail', {
+                            id: item._id, 
+                            colheita: item.colheita,
+                            floracao: item.floraçao,
+                            germinacao: item.germinacao,
+                            nome: item.nome,
+                            sistemaPlantio: item.sistemaPlantio,
+                            tipoPlantio: item.tipoPlantio,
+
+                        })
+                    }}
+                >
                 <View style={styles.titleIconContainer}>
                 <Title 
                 style={styles.Title}
@@ -116,7 +131,6 @@ const PlantacaoListScreen = ({ navigation }) => {
              </Portal>
             </ScrollView>
             </View>
-            
             )
         };
         

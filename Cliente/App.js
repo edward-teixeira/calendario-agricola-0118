@@ -17,45 +17,68 @@ import { setNavigator} from "./src/navigationRef";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import { Provider as PlantacaoProvider } from './src/context/PlantacaoContext';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { AppBar } from './src/components/AppBar';
+import { Text, View, Image } from 'react-native-elements';
 
 
-const switchNavigator = createSwitchNavigator({
-    ResolveAuth: ResolveAuthScreen,
-    loginFlow: createStackNavigator({
-        SignUp: SignUpScreen,
-        SignIn: SignInScreen,
-    }),
-    mainFlow: createBottomTabNavigator({
-        plantacaoListFlow: createStackNavigator({
-            plantacaoList: PlantacaoListScreen,
-            createPlantacao: CreatePlantacaoScreen,
-            plantacaoDetail: PlantacaoDetailScreen,
-            plantacaoEditScreen: EditPlantacaoScreen,
-            anotacaoCreate: CreateAnotacaoScreen
+
+
+const switchNavigator = createSwitchNavigator( 
+    {
+        ResolveAuth: ResolveAuthScreen,
+        loginFlow: createStackNavigator({
+            SignUp: SignUpScreen,
+            SignIn: SignInScreen,
         }),
-        Colheita: ColheitaScreen,
-        Account: AccountScreen
-    })
-}, {
-
-});
-const App=createAppContainer(switchNavigator);
-
-
-export default () => {
-    return (
-        <PlantacaoProvider>
-        <AuthProvider>
+        mainFlow: createBottomTabNavigator({
+            plantacaoListFlow: createStackNavigator({
+                plantacaoList: PlantacaoListScreen,
+                createPlantacao: CreatePlantacaoScreen,
+                plantacaoDetail: PlantacaoDetailScreen,
+                plantacaoEditScreen: EditPlantacaoScreen,
+                anotacaoCreate: CreateAnotacaoScreen
+            }, {
+                defaultNavigationOptions: {
+                    headerTitle: () => 
+                    <Text style={{fontSize: 30, fontWeight: 'bold', letterSpacing: 2, color: '#626262', alignSelf: 'center',
+                        marginLeft:  110}}
+                    >Growth</Text>
+                    ,
+                    headerStyle: {
+                        backgroundColor: '#00e676',
+                        headerTintColor: '#626262'
+                    },
+                    headerLeft: null,
+                    headerRight: () => <Image 
+                        source={require('./src/assets/Vector.png')}
+                        style={{ width: 50, height: 50, marginLeft: 90 }}
+                    />
+                  },
+            }),
+            Colheita: ColheitaScreen,
+            Account: AccountScreen
+        }
+        )
+    });
+    
+    const App=createAppContainer(switchNavigator);
+    
+    
+    export default () => {
+        return (
+            <PlantacaoProvider>
+            <AuthProvider>
             <PaperProvider>
             <App
-                ref={ (navigate)=> setNavigator(navigate) }
+            ref={ (navigate)=> setNavigator(navigate) }
             />
             </PaperProvider>
-        </AuthProvider>
-        </PlantacaoProvider>
-    )
-};
-
-
-
-
+            </AuthProvider>
+            </PlantacaoProvider>
+            )
+        };
+        
+        
+        
+        
+        
