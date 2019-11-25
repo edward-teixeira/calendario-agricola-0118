@@ -1,23 +1,21 @@
 const Anotacao = require('../models/anotacao');
 const Plantacao = require('../models/plantacao');
+const mongoose = require('mongoose');
 //Criar = OK; Update: OK; ListarAll: OK; ListarPorID: Ok
 //TODO(- Deletar; - Retornar todos ordedanos por data)
 
 exports.criarAnotacao = async (req, res, next) => {
 
     try {
-        const anotacao = await Anotacao.create(req.body);
-        if(anotacao) {
-           await Plantacao.findById(req.params.plantacaoId)
-               .exec(function(err, plantacao) {
-                  if(plantacao) {
-                      plantacao.anotacao.push(anotacao);
-                      plantacao.save();
-                      return res.status(200).json({error: false, plantacao})
-                  } else
-                      return res.status(400).json({error: true, message: "Houve um erro ao criar a anotacao"});
-               });
-        }
+        console.log(req.body);
+        const anotacaoNova = await new Anotacao ({ titulo: req.body.Titulo, descricao: req.body.Descricao });
+        await anotacaoNova.save();
+        if(anotacaoNova) {
+            const plantacaoByID = await Plantacao.findOne({"_id": req.params.plantacaoId})
+            plantacaoByID.anotacao.push(anotacaoNova);
+            await plantacaoByID.save();
+            return res.status(200).json({error: false, message: "Anotacao criada com sucesso"});
+        }   
         return res.status(400).json({error: true, message: "Houve um erro ao criar a anotacao"});
     }catch(error) {
         console.log(error);
@@ -27,26 +25,32 @@ exports.criarAnotacao = async (req, res, next) => {
 
 exports.listarTodasAnotacoes = async (req, res, next) => {
     try {
-        const pageNo = parseInt(req.query.pageNo);
-        const size = parseInt(req.query.size);
-        const query ={};
-        if(pageNo < 0 || pageNo === 0) {
-            response = {error: true, message : "Numero de paginas invalido, deve começar com 1"};
-            return res.status(400).json(response)
+        // const pageNo = parseInt(req.query.pageNo);
+        // const size = parseInt(req.query.size);
+        // const query ={};
+        // if(pageNo < 0 || pageNo === 0) {
+        //     response = {error: true, message : "Numero de paginas invalido, deve começar com 1"};
+        //     return res.status(400).json(response)
+        // }
+        // query.skip = size * (pageNo - 1);
+        // query.limit = size;
+       
+        const plantacoes = await Plantacao.findById(req.params.plantacaoId);
+        let anotacoesID = [];
+        let anotacoes = [];
+        for( let i = 0 ; i < plantacoes.anotacao.length; i++) {
+             anotacoesID.push(plantacoes.anotacao[i]);
         }
-        query.skip = size * (pageNo - 1);
-        query.limit = size;
 
-        const plantacoes = await Plantacao.findOne({"_id": req.params.plantacaoId},{}, query)
-            .populate('anotacao')
-            .sort({date: -1})
-            .exec(async function(err, data) {
-                if(data) {
-                    anotacao = data.anotacao;
-                    return res.status(200).json({error: false, anotacao});
-                } else
-                    res.status(400).json({error: true, message: "Não existem anotacoes para essa plantacao"});
-            });
+        if(anotacoesID.length >= 1 && anotacoesID !== null && anotacoesID !== 'undefined') {
+            
+            for (const id of anotacoesID) {
+                temp = await Anotacao.findById(id);
+                if(temp) anotacoes.push(temp);
+            }
+            return res.status(200).json({error: false, anotacoes: anotacoes});
+        } else 
+             return res.status(400).json({error: true, message: "Não existem anotacoes para essa plantacao"});
 
     }catch(error) {
         res.status(500).json({error: "Não foi possível realizar a pesquisa"})
@@ -73,18 +77,12 @@ exports.listarAnotacao = async(req, res, next) => {
 
 exports.atualizarAnotacao = async(req, res, next) => {
     try {
-        //Checar se a anotacao existe
-        const anotacaoRef = await Plantacao.findOne({"_id": req.params.plantacaoId})
-            .populate('anotacao', '_id');
 
-        if (anotacaoRef) {
-            const anotacaoAtualizada = await Anotacao.findByIdAndUpdate(req.params.id, req.body, {new: true})
-                .exec(function (err, data) {
-                    if (err) return res.status(400).json({error: true, message: "Houve um erro ao processar a anotacao"});
-                    return res.status(200).json({error: false, data});
-                })
-        } else
-            return res.status(400).json({error:true, message:"Não foi possivel achar anotacoes para essa plantacao"});
+        const anotacaoAtualizada = await Anotacao.findByIdAndUpdate(req.params.plantacaoId, req.body, {new: true } );
+        if(anotacaoAtualizada) 
+            return res.status(200).json({error:false, message:"Anotacao Atualizada com Sucesso"});
+
+        return res.status(400).json({error:true, message:"Houve um erro ao atualizar anotacao"});
 
     } catch (error) {
         console.log(error);

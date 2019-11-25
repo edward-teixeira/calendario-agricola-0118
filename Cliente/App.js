@@ -9,18 +9,18 @@ import PlantacaoDetailScreen from "./src/screens/PlantacaoDetailScreen";
 import PlantacaoListScreen from "./src/screens/PlantacaoListScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
+import AnotacaoListScreen from './src/screens/AnotacaoListScreen';
 import EditPlantacaoScreen from './src/screens/EditPlantacaoScreen';
 import CreateAnotacaoScreen from "./src/screens/CreateAnotacaoScreen";
 import CreatePlantacaoScreen from "./src/components/CreatePlantacaoForm";
 import  { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as AnotacaoProvider } from './src/context/AnotacaoContext';
 import { setNavigator} from "./src/navigationRef";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import { Provider as PlantacaoProvider } from './src/context/PlantacaoContext';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { AppBar } from './src/components/AppBar';
 import { Text, View, Image } from 'react-native-elements';
-
-
+import AnotacaoEditScreen from './src/screens/AnotacaoEditScreen'
 
 
 const switchNavigator = createSwitchNavigator( 
@@ -36,7 +36,9 @@ const switchNavigator = createSwitchNavigator(
                 createPlantacao: CreatePlantacaoScreen,
                 plantacaoDetail: PlantacaoDetailScreen,
                 plantacaoEditScreen: EditPlantacaoScreen,
-                anotacaoCreate: CreateAnotacaoScreen
+                anotacaoCreate: CreateAnotacaoScreen,
+                anotacaoList: AnotacaoListScreen,
+                anotacaoEdit: AnotacaoEditScreen
             }, {
                 defaultNavigationOptions: {
                     headerTitle: () => 
@@ -66,6 +68,7 @@ const switchNavigator = createSwitchNavigator(
     
     export default () => {
         return (
+            <AnotacaoProvider>
             <PlantacaoProvider>
             <AuthProvider>
             <PaperProvider>
@@ -75,6 +78,7 @@ const switchNavigator = createSwitchNavigator(
             </PaperProvider>
             </AuthProvider>
             </PlantacaoProvider>
+            </AnotacaoProvider>
             )
         };
         

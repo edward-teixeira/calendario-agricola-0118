@@ -3,9 +3,6 @@ import { View, StyleSheet, Text, FlatList, ScrollView, Alert} from 'react-native
 import { Context as PlantacaoContext } from '../context/PlantacaoContext';
 import { Card, List, Title, Paragraph, Button, IconButton, Icon, TouchableRipple, FAB, Portal } from 'react-native-paper';
 
-
-
-
 const PlantacaoListScreen = ({ navigation }) => {
 
     const { state, DeletarPlantacao, ListarPlantacoes, EditarPlantacao } = useContext(PlantacaoContext);
@@ -28,14 +25,6 @@ const PlantacaoListScreen = ({ navigation }) => {
         };
     }, []);
 
-    const showAlert = (messageTitle, messageBody) => {
-        Alert.alert(messageTitle, messageBody, [
-            {
-                text: 'Ok',
-                onPress: () => {}
-            }
-        ])
-    }
     
     return (
         <View>
@@ -48,8 +37,7 @@ const PlantacaoListScreen = ({ navigation }) => {
         renderItem={({item}) => {
             return (
                 <Card style={styles.container}
-                    onPress={() =>{
-                        console.log(item);    
+                    onPress={() =>{   
                         navigation.navigate('plantacaoDetail', {
                             id: item._id, 
                             colheita: item.colheita,
@@ -58,7 +46,7 @@ const PlantacaoListScreen = ({ navigation }) => {
                             nome: item.nome,
                             sistemaPlantio: item.sistemaPlantio,
                             tipoPlantio: item.tipoPlantio,
-
+                            dataCriacao: item.createdAt
                         })
                     }}
                 >

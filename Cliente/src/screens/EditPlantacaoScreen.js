@@ -69,10 +69,7 @@ const EditPlantacaoScreen = ({ navigation }) => {
         </View>
         <Button
         mode="contained"
-        onPress={() => {
-            console.log(`${nome}`);
-                EditarPlantacao(id, nome, tipoChecked, sistemaChecked, () => navigation.pop())
-        }}
+        onPress={() => { EditarPlantacao(id, nome, tipoChecked, sistemaChecked, () => navigation.pop())}}
         >Editar</Button>
         </Card>
         </View>

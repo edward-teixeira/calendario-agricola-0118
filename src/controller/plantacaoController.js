@@ -7,7 +7,6 @@ const colheitaController = require('../controller/colheitaController');
 //TODO( LISTAR TODAS - OK )
 exports.listManyPlantacao = async(req, res, next) => {
     try{
-        console.log(req.user._id);
         const todasAsPlantacoes = await Plantacao.find({ userId: req.user._id });
        /* const pageNo = parseInt(req.query.pageNo);
         const size = parseInt(req.query.size);
@@ -97,7 +96,6 @@ exports.update_plantacao = async(req, res, next) => {
 //TODO(DELETAR - OK)
 exports.delete_plantacao = async(req, res, next) => {
     try {
-        console.log(req.user._id);
         const plantacoesDoUsuario = await Plantacao.find({ userId: req.user._id });
         if(plantacoesDoUsuario) {
             await Plantacao.findOneAndRemove({ id: plantacoesDoUsuario._id });

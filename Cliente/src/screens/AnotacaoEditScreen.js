@@ -12,11 +12,14 @@ import { Button,
 } from 'react-native-paper';
 
 
-const CreateAnotacaoScreen = ({ navigation }) => {    
-    const plantacaoId = navigation.getParam('id')
+const EditAnotacaoScreen = ({ navigation }) => {    
+    const id = navigation.getParam('id')
+    const plantacaoId= navigation.getParam('plantacaoId')
     const [ Titulo, setTitulo ] = useState('');
     const [ Descricao, setDescricao ] = useState('');
-    const { CriarAnotacao } = useContext(AnotacaoContext);
+    const { state, EditarAnotacao } = useContext(AnotacaoContext);
+
+    const anotacao = state.find(anotacao => anotacao._id === id ); 
 
     return (
         <ScrollView
@@ -46,15 +49,15 @@ const CreateAnotacaoScreen = ({ navigation }) => {
                      mode="contained"
                      color='#ffd600'
                      onPress={() => {
-                        CriarAnotacao(plantacaoId,Titulo, Descricao, navigation.navigate('anotacaoList'));
+                        EditarAnotacao(id, plantacaoId, Titulo, Descricao, () => navigation.pop());
                         }}
-                    >Criar</Button>
+                    >Editar</Button>
                </Card>
         </View>
         </ScrollView>
     )
 };
-
+() => navigation.pop()
 const styles = StyleSheet.create( {
     cardStyle: {
         backgroundColor: '#FFF59D',
@@ -65,4 +68,4 @@ const styles = StyleSheet.create( {
 
 });
 
-export  default CreateAnotacaoScreen;
+export  default EditAnotacaoScreen;
