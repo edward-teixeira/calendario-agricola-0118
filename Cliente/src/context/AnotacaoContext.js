@@ -22,7 +22,7 @@ const anotacaoReducer = ( state, action ) => {
 const CriarAnotacao = dispatch => async (plantacaoId, Titulo, Descricao, callback) => {
     try {
          await calendarioApi.post(`/plantacao/${plantacaoId}/anotacao/`, { Titulo, Descricao })
-         callback
+         ListarAnotacao
     }catch(e) {
         console.log(e);
     }
@@ -65,7 +65,7 @@ const ListarAnotacao = dispatch => async (plantacaoId) => {
          console.log(anotacaoId);
          const plantacaoDeletada = await calendarioApi.delete(`/plantacao/${plantacaoId}/anotacao/${anotacaoId}`);
          dispatch({type: 'delete_anotacao', payload: anotacaoId})
-         ListarPlantacoes;
+         ListarAnotacao;
      }catch(error) {
          console.log(error)
      }

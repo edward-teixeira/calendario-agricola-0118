@@ -9,19 +9,16 @@ const ListAnotacaoScreen = ({ navigation }) => {
     const { state, CriarAnotacao, ListarAnotacao, DeletarAnotacao } = useContext(AnotacaoContext);
     const [ Visible, setVisible ] = useState(true);
 
-    console.log(JSON.stringify(state));
 
     useEffect(() => {
-            setVisible(true);
-            ListarAnotacao(plantacaoId);
         
         const listener = navigation.addListener('didFocus', () => {
             setVisible(true);
             ListarAnotacao(plantacaoId);
         });
-        const fabListener = navigation.addListener('didBlur', () => {
-            setVisible(false);
-        })
+         const fabListener = navigation.addListener('willBlur', () => {
+             setVisible(false);
+         })
         
         return () => {
             listener.remove();
