@@ -3,17 +3,13 @@ const Colheita = require('../models/colheita');
 const chalk = require('chalk');
 const mongoose = require('mongoose');
 
-exports.RemovePlantacaoCriaColheita = async ({_id, nome, tipoPlantio, dataInicio}) => {
+exports.CriaColheita = async (user_id, _id, nome) => {
     try {
-        const novaColheita = await Colheita.create({nome, tipoPlantio, dataInicio});
-        const removedPlantacao = await Plantacao.findOneAndRemove({'_id': _id});
-        if(!novaColheita)
-            return res.status(400).json({error: true, message: "Colheita nao existe"});
+        const novaColheita = await Colheita.create({'userId': user_id, 'plantacaoId': _id, 'nome': nome });
     } catch (e) {
-        res.status(500).json({error: true, message: "Colheita nao encontrada"});
+        console.log(e);
     }
 };
-// return res.json(400).json({error: true, message: "Impossivel criar a colheite"});
 
 exports.ListaPlantacaoDaColheita = async(req, res, next) => {
     const exists = await Colheita.findById({"_id": req.params.id});
@@ -25,23 +21,12 @@ exports.ListaPlantacaoDaColheita = async(req, res, next) => {
 exports.listaColheitas = async (req, res, next) => {
 
     try {
-        const pageNo = parseInt(req.query.pageNo);
-        const size = parseInt(req.query.size);
-        const query ={};
-        if(pageNo < 0 || pageNo === 0) {
-            response = {error: true, message : "Numero de paginas invalido, deve começar com 1"};
-            return res.status(400).json(response)
-        }
-        query.skip = size * (pageNo - 1);
-        query.limit = size;
-        const colheitas = await Colheita.find({},{}, query)
-            .sort({date: -1})
-            .exec(async function(err, data) {
-                if(data) {
-                    return res.status(200).json({error: false, data});
-                } if(err)
-                    return res.status(404).json({error: true, message: "Não existem colheitas"});
-            });
+        const colheitas = await Colheita.find({userId: req.user._id})
+        console.log("**Servidor**\n" + colheitas);
+        if(colheitas)
+            return res.status(200).json(colheitas);
+
+        return res.status(404).json({error: true, message: "Não existem colheitas"});
     }catch (e) {
         res.status(500).json({error: true, message: "Nao foi possivel listar colheitas"});
     }

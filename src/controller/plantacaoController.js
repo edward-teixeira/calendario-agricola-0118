@@ -7,24 +7,31 @@ const colheitaController = require('../controller/colheitaController');
 //TODO( LISTAR TODAS - OK )
 exports.listManyPlantacao = async(req, res, next) => {
     try{
+       
+        let helper = [];
+        let newColheita = [];
         const todasAsPlantacoes = await Plantacao.find({ userId: req.user._id });
-       /* const pageNo = parseInt(req.query.pageNo);
-        const size = parseInt(req.query.size);
-        const query ={};
-        if(pageNo < 0 || pageNo === 0) {
-            response = {error: true, message : "Numero de paginas invalido, deve começar com 1"};
-            return res.status(400).json(response)
+        
+        for (let index = 0; index < todasAsPlantacoes.length; index++) {
+            helper[index] = todasAsPlantacoes[index];
+            console.log(helper[index]);
+            if(!helper[index].prontoParaColheita) {
+              newColheita.push(await Plantacao.findByIdAndUpdate(helper[index]._id, { prontoParaColheita: true }, {new: true }));
+    
+            }   
         }
-        query.skip = size * (pageNo - 1);
-        query.limit = size;*/
-        /*const plantacoes = await Plantacao.find({},{},query, function(err, plantacoes) {
-            if(plantacoes) return res.status(200).json({plantacoes});
-            if(err) return res.status(400).json({error: "Você não tem plantações"});
-        });*/
-
-        if(todasAsPlantacoes) return res.status(200).json(todasAsPlantacoes);
-        res.status(200).send({error: "Nehuma plantacao encontrada"});
-
+        if(newColheita.length > 0 ) {
+            for (let index = 0; index < newColheita.length; index++) {
+                await colheitaController
+                    .CriaColheita(req.user._id, newColheita[index]._id, newColheita[index].nome);
+            }
+        }
+        
+        if(todasAsPlantacoes) 
+            return res.status(200).json(todasAsPlantacoes);
+        
+        return res.status(200).send({error: "Nehuma plantacao encontrada"});
+        
     }catch(error) {
         console.log(error);
         res.status(500).json({error: "Nao foi possivel listar plantacoes"});
@@ -32,33 +39,24 @@ exports.listManyPlantacao = async(req, res, next) => {
 };
 
 exports.listOnePlantacao = async(req, res, next) => {
-
+    
     try{
-        const plantacao =  await Plantacao.findById({"_id": req.params.id, userId: req.user._id},async function(err, plantacao) {
-
-            if(plantacao)  {
-                const prontoParaColheita = plantacao.podeColher;
-                if(prontoParaColheita) {
-                    const updated = await Plantacao.findOneAndUpdate({"_id": req.params.id}, {prontoParaColheita: true}, {new: true},
-                        async function(err, data) {
-                            if(data) {
-                                data.prontoParaColheita = true;
-                                data.save();
-                                await colheitaController.RemovePlantacaoCriaColheita(data);
-                                return res.status(200).json({error: false, data});
-                            }
-                            if(err) {
-                                res.status(500).json({error: true, message: "Ocorreu um erro ao cirar uma colheita"});
-                            }
-                        });
-                    }
-                }else
-                    return res.status(200).json({error: true, message: "Plantacao nao encontrada"});
-            if(err)
-                return res.status(200).json({error: true,message: "Plantacao não encontrada"});
-        });
-
+        const plantacao =  await Plantacao.findById(req.params.id);
+        console.log(plantacao)
+        // if(plantacao){
+        //     if(!plantacao.podeColher)
+        //          return res.status(200).json({error: true, plantacao});
+        //     else {
+        //        const teste =  await Plantacao.findByIdAndUpdate({'id': plantacao._id}, {prontoParaColheita: true }, {new: true });
+        //        console.log(teste);
+        //         await colheitaController
+        //             .RemovePlantacaoCriaColheita(plantacao._id, plantacao.nome, plantacao.tipoPlantio, plantacao.dataInicio);
+        //     }
+        // }
+        // return res.status(400).json({error: true, message: "Ocorreu um erro ao cirar uma colheita"});
+        
     }catch(error) {
+        console.log(error);
         res.status(500).json({error: error});
     }
 };
@@ -66,7 +64,7 @@ exports.listOnePlantacao = async(req, res, next) => {
 //TODO(CRIAR - OK)
 exports.create_plantacao = async (req, res, next) => {
     try {
-	const { nome, tipo, sistema } = req.body
+        const { nome, tipo, sistema } = req.body
         const plantacao = await new Plantacao( { nome, tipoPlantio: tipo, sistemaPlantio: sistema, userId: req.user._id } );
         await plantacao.save();
         return res.status(201).json({error: false, message: "Plantacao criada com sucesso"});
@@ -83,11 +81,11 @@ exports.update_plantacao = async(req, res, next) => {
         const plantacoesUsuario = await Plantacao.find( { userId: req.user._id });
         const plantacao = await Plantacao.findById({'_id': reqID}); // Lembrar desse padrão
         if(!plantacao) res.status(400).json({error: false, message: 'Houve um erro ao salvar os dados'});
-
+        
         const updated = await Plantacao
-            .findByIdAndUpdate({'_id': reqID},req.body, {new: true});
+        .findByIdAndUpdate({'_id': reqID},req.body, {new: true});
         return res.status(200).json({error: false, message: "Plantacao Editada com sucesso",
-            updated});
+        updated});
     } catch (error) {
         return res.status(500).json({error:'Houve um erro ao salvar os dados'});
     }
@@ -102,7 +100,7 @@ exports.delete_plantacao = async(req, res, next) => {
             return res.status(200).json({error: false, message: "Plantacao deletada com sucesso" });
         }
         return res.status(200).json({error: true, message: "Não foi possivel deletar a plantação" });
-
+        
     } catch (e) {
         return res.status(500).json({error:'Houve um erro ao remover os dados'});
     }

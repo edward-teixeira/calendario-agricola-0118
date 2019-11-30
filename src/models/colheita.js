@@ -7,60 +7,50 @@ const colheitaSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
   },
+  nome: {
+    type: String
+  },
   quantidade: {
     type: Number,
   },
   tamanho: {
     type: Number
   },
-  classificacao: {
-    cheiro:{
+  cheiro:{
       type: Number,
       min: [1, 'Avalicao deve ter o minimo de 1'],
       max: [5, 'Avaliacao deve ter o maximo de 5'],
       default:1
     },
-    gosto:{
-      type: Number,
-      min: [1, 'Avalicao deve ter o minimo de 1'],
-      max: [5, 'Avaliacao deve ter o maximo de 5'],
-    default:1
-    } ,
-    Densidade:{
+  gosto:{
       type: Number,
       min: [1, 'Avalicao deve ter o minimo de 1'],
       max: [5, 'Avaliacao deve ter o maximo de 5'],
       default:1
     } ,
-    Visual: {
+  Densidade:{
       type: Number,
       min: [1, 'Avalicao deve ter o minimo de 1'],
       max: [5, 'Avaliacao deve ter o maximo de 5'],
       default:1
-  }
+    } ,
+  Visual: {
+      type: Number,
+      min: [1, 'Avalicao deve ter o minimo de 1'],
+      max: [5, 'Avaliacao deve ter o maximo de 5'],
+      default:1
   },
   observacoes: {
     type: String,
     maxlength: [15, 'Observações não podem execeder 15 caracteres'],
     trim: true
   },
-    nome: {
-      type: String,
-      require: true,
-    },
-    tipoPlantio: {
-      type: String,
-      enum: ['semente','muda']
-    },
-    dataInicio: {
-      type: Date,
-      default: Date.now()
-    },
-  /*plantacao: {
+  plantacaoId: {
     type: Schema.Types.ObjectId,
-    ref: 'plantacao',*/
+    ref: 'plantacao',
   }
-);
+});
+
 colheitaSchema.virtual('dataIni')
     .get( function() {
         return datefns.format(this.dataInicio, 'dd/MM/yyyy');

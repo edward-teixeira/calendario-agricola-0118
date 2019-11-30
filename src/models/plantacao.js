@@ -17,10 +17,12 @@ const plantacaoSchema = new mongoose.Schema({
   sistemaPlantio: {
     type: String,
     enum: ['hidroponia', 'terra'],
+    default: 'terra'
   },
   tipoPlantio: {
     type: String,
-    enum: ['semente','muda']
+    enum: ['semente','muda'],
+    default: 'muda'
   },
   germinacao: {
     type: Number,
@@ -57,8 +59,8 @@ plantacaoSchema.virtual('podeColher')
     .get( function() {
         const p = this.colheita + this.floraçao + this.germinacao;
         if(p !== 0) {
-          const dataColheita = datefns.format((datefns.addDays(this.dataInicio, p)), 'dd/MM/yyyy');
-          const dataAgora = datefns.format(new Date(Date.now()), 'dd/MM/yyyy');
+           const dataColheita = datefns.addDays(this.dataInicio, p);
+           const dataAgora = Date.now();
           return  datefns.isEqual(dataColheita, dataAgora);
         }
         return true;
